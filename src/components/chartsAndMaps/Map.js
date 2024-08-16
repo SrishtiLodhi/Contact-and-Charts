@@ -1,7 +1,7 @@
-// Map.js
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet'; // Import Leaflet
 
 const Map = () => {
   const [mapData, setMapData] = useState([]);
@@ -21,7 +21,7 @@ const Map = () => {
   }, []);
 
   return (
-    <MapContainer center={[0, 0]} zoom={2} style={{ height: '500px' }}>
+    <MapContainer center={[0, 0]} zoom={2} style={{ height: '500px', width: '100%' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -31,6 +31,7 @@ const Map = () => {
           <Marker
             key={country.countryInfo._id}
             position={[country.countryInfo.lat, country.countryInfo.long]}
+            icon={L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34] })}
           >
             <Popup>
               <div>
@@ -44,7 +45,6 @@ const Map = () => {
         ))}
     </MapContainer>
   );
-  
 };
 
 export default Map;
