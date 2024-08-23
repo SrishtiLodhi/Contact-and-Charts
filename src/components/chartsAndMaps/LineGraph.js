@@ -17,11 +17,11 @@ const LineGraph = () => {
         const response = await fetch('https://disease.sh/v3/covid-19/historical/all?lastdays=all');
         const responseData = await response.json();
 
-        // Process data to fit Chart.js format
+     // Process data to fit Chart.js format
         const casesData = responseData.cases;
-        const dates = Object.keys(casesData);
+        const dates = Object.keys(casesData).map(date => new Date(date).toISOString().split('T')[0]);
         const cases = Object.values(casesData);
-
+  
         const formattedData = {
           labels: dates,
           datasets: [
@@ -30,19 +30,19 @@ const LineGraph = () => {
               data: cases,
               fill: false,
               borderColor: 'rgba(75,192,192,1)',
-              tension: 0.1, // Optional: smooths the line
+              tension: 0.1,
             },
           ],
         };
-
+  
         setData(formattedData);
-        setLoading(false); // Data is loaded, set loading to false
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching graph data', error);
-        setLoading(false); // Error occurred, set loading to false
+        setLoading(false);
       }
     }
-
+  
     fetchData();
   }, []);
 
